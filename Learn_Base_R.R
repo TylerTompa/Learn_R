@@ -1,9 +1,29 @@
+# You can delete variables on R using the remove() or the rm() function.
+variable1 <- 1
+variable1
+rm(variable1)
+
+# You can delete multiple variables at once buy including each one within the rm() function.
+# The following will delete variable1 and variable2, but not variable3
+variable1 <- 1
+variable2 <- c(1,2)
+variable3 <- c(1,2,3)
+rm(variable1, variable2)
+
+# Lastly, you can also delete all variables at once with the following command.
+variable1 <- 1
+variable2 <- c(1,2)
+variable3 <- c(1,2,3)
+rm(list = ls() )
+# WARNING: YOU SHOULD ONLY RUN THIS COMMAND IN THE CONSOLE.  IF THIS IS INCLUDED IN SCRIPTS OR MARKDOWN FILES,
+# IT CAN POTENTIALLY CAUSE UNINTENDED EFFECTS.
+
 # The class() function
 ##################################################
-# You can check the class of a variable with the class() function
+# You can check the class of a variable with the class() function.
 
 # R does not differentiate between integers and decinals;
-# to R they are both just numeric
+# to R they are both just numeric.
 integer <- 4
 class(integer)
 
@@ -17,48 +37,89 @@ class(character)
 # Instead of a vector of numerics, R just sees numeric.
 vector_of_numbers <- c(1, 2, 3)
 class(vector_of_numbers)
-
 vector_of_characters <- c("1", "2", "3")
 class(vector_of_characters)
 
 # Similarly, R only sees a list as a list, not as a list of a certain class.
 list_of_numbers <- list(1, 2, 3, 4, 5)
 class(list_of_numbers)
-
 list_of_characters <- list("1", "2", "3", "4", "5")
 class(list_of_characters)
-
 list_of_mixed_classes <- list(1, c("1", "2", "3"), "4", FALSE)
 class(list_of_mixed_classes)
 
+# Booleans are called "logical" in R.
 logical <- TRUE
 class(logical)
 
 ##################################################
 
+# Vectors
+##################################################
+# When using vectors, you can "name" each element using the names() function after defining the vector.
+profits <- c(98, 94, 96,
+             97, 100, 103,
+             102, 102, 104,
+             105, 100, 103)
+names(profits) <- c("January", "February", "March",
+                   "April", "May", "June",
+                   "July", "August", "September",
+                   "October", "November", "December")
+# You can then reference an element by both index and name
+profits[7]
+profits["July"]
+
+# Alternatively, you can name each element as you're defining the vector.
+rm(profits)
+profits <- c("January" = 98, "February" = 94, "March" = 96,
+             "April" = 97, "May" = 100, "June" = 103,
+             "July" = 102, "August" = 102, "September" = 104,
+             "October" = 105, "November" = 100, "December" = 103)
+profits[7]
+profits["July"]
+
+# Consider your daily revenue in a given week, and your daily costs in the same week
+daily_revenue <- c(98, 95, 92, 94, 93)
+daily_costs <- c(24, 20, 22, 22, 23)
+# Now define a vector of day names
+days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+
+# Then you do something completely unnecesary-but nonetheless awsome-like this
+names(daily_revenue) <- days_vector -> names(daily_costs)
+daily_revenue["Tuesday"] - daily_costs["Tuesday"]
+
+# Logical operations are performed element-wise with vectors, returning a list of logical variables
+daily_costs > 22
+# Meaning that a logical operation can be used to select which elements we want.
+# Under the hood, you are forming a vector of logical variables,
+# then passing that vector into your vector of interest
+daily_costs[daily_costs > 22]
+daily_costs[daily_costs > 22 & daily_costs < 24]
+c(daily_revenue - daily_costs)[c(daily_revenue - daily_costs) > 70]
+##################################################
+
 # Factors
 ##################################################
-# Factors are a data type used to store repetitive categorical data
+# Factors are a data type used to store repetitive categorical data.
 # You can create a factor with factor() function with the factor elements,
-# or by converting an existing vector to a factor
-grades <- c("B", "NI", "NI", "G", "NI", "B", "G", "NI", "G")
-grades_factor <- factor(grades)
-class(grades)
-grades
+# or by converting an existing vector to a factor.
+speeds <- c("S", "A", "A", "F", "A", "S", "F", "A", "F")
+speeds_factor <- factor(speeds)
+class(speeds_factor)
+
 # You can then use the summary() function for a summary of the levels that make up the factor
-summary(grades_factor)
+summary(speeds_factor)
 
 # You can use the levels function to see each distinct category, or "level," within a factor.
-# WARNING: The order with which you assign levels is important.
+# WARNING: THE ORDER WITH WHICH YOU ASSIGN LEVELS IS IMPORTANT.
 # If you don't specify levels manually, R will automatically assign levels aphabetically
 # So when assigning levels, they should be assigned alphabetically, not in their natural order.
 # Compare the following assignments:
-levels(grades_factor) <- c("Bad", "Needs Improvement", "Good")
-summary(grades_factor)
+levels(speeds_factor) <- c("Slow", "Average", "Fast")
+summary(speeds_factor)
 
-levels(grades_factor) <- c("Bad", "Good", "Needs Improvement")
-summary(grades_factor)
-# In this example, R has assigned the level "Fast" to any element 
+levels(speeds_factor) <- c("Slow", "Fast", "Average")
+summary(speeds_factor)
 
 # In some cases, certain categories are "better" than others, as in this example.
 # The "ordered" argument can be set to TRUE to specify this
