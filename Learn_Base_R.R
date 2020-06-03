@@ -4,13 +4,13 @@ variable1
 rm(variable1)
 
 # You can delete multiple variables at once buy including each one within the rm() function.
-# The following will delete variable1 and variable2, but not variable3
+# The following will delete variable1 and variable2, but not variable3.
 variable1 <- 1
 variable2 <- c(1,2)
 variable3 <- c(1,2,3)
 rm(variable1, variable2)
 
-# Lastly, you can also delete all variables at once with the following command.
+# Lastly, you can also delete all variables at once with the ccommand: rm(list = ls())
 variable1 <- 1
 variable2 <- c(1,2)
 variable3 <- c(1,2,3)
@@ -65,7 +65,7 @@ names(profits) <- c("January", "February", "March",
                    "April", "May", "June",
                    "July", "August", "September",
                    "October", "November", "December")
-# You can then reference an element by both index and name
+# You can then reference an element by both index and name.
 profits[7]
 profits["July"]
 
@@ -81,18 +81,18 @@ profits["July"]
 # Consider your daily revenue in a given week, and your daily costs in the same week
 daily_revenue <- c(98, 95, 92, 94, 93)
 daily_costs <- c(24, 20, 22, 22, 23)
-# Now define a vector of day names
+# Now define a vector of day names.
 days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
 
-# Then you do something completely unnecesary-but nonetheless awsome-like this
+# Then you do something completely unnecesary-but nonetheless awesome-like this.
 names(daily_revenue) <- days_vector -> names(daily_costs)
 daily_revenue["Tuesday"] - daily_costs["Tuesday"]
 
-# Logical operations are performed element-wise with vectors, returning a list of logical variables
+# Logical operations are performed element-wise with vectors, returning a list of logical variables.
 daily_costs > 22
 # Meaning that a logical operation can be used to select which elements we want.
 # Under the hood, you are forming a vector of logical variables,
-# then passing that vector into your vector of interest
+# then passing that vector into your vector of interest.
 daily_costs[daily_costs > 22]
 daily_costs[daily_costs > 22 & daily_costs < 24]
 c(daily_revenue - daily_costs)[c(daily_revenue - daily_costs) > 70]
@@ -122,7 +122,7 @@ levels(speeds_factor) <- c("Slow", "Fast", "Average")
 summary(speeds_factor)
 
 # In some cases, certain categories are "better" than others, as in this example.
-# The "ordered" argument can be set to TRUE to specify this
+# The "ordered" argument can be set to TRUE to specify this.
 grades <- c("Bad", "Needs Improvement", "Needs Improvement", "Good", "Needs Improvement", "Bad", "Good", "Needs Improvement", "Good")
 grades_factor <- factor(grades, ordered=TRUE, levels=c("Bad", "Needs Improvement", "Good"))
 summary(grades_factor)
@@ -132,8 +132,8 @@ levels(grades_factor)
 
 # Sequences
 ##################################################
-# You can create sequences of numbers with the seq() function
-# You can specify the starting and ending number with the from= and to= arguments
+# You can create sequences of numbers with the seq() function.
+# You can specify the starting and ending number with the from= and to= arguments.
 numbers <- seq(from = 1, to = 5)
 numbers
 numbers <- seq(1, 5)
@@ -141,25 +141,25 @@ numbers
 numbers <- seq(from = 1, to = 10)
 numbers
 # Alternatively, you can use the syntax a:b,
-# where a is the starting number, and b is the ending number
+# where a is the starting number, and b is the ending number.
 numbers <- seq(1:7)
 numbers
-# When using the syntax a:b, the seq() is not necessary
+# When using the syntax a:b, the seq() is not necessary.
 numbers <- 1:10
 numbers
-# The by= argument can be used to specify the step size
+# The by= argument can be used to specify the step size.
 numbers <- seq(1,10, by=2)
 numbers
 numbers <- seq(1, 10, by=0.2)
 numbers
-# The length.out argument can be used to specify a definite length
+# The length.out argument can be used to specify a definite length.
 numbers <- seq(1, 10, length.out=3)
 numbers
 numbers <- seq(1, 2, length.out=10)
 numbers
 # The along.with argument can be set to another vector,
-# The resulting sequence will have the same length
-# NOTE: The corresponding vector need not be the same data type
+# The resulting sequence will have the same length.
+# NOTE: The corresponding vector need not be the same data type.
 character_vector_of_length_7 <- c("this", "is", "not", "numeric", "this", "is", "character")
 numeric_vector_of_length_7 <- seq(1, 5, along.with = character_vector_of_length_7)
 numeric_vector_of_length_7
@@ -168,7 +168,7 @@ numeric_vector_of_length_7
 # Repetitions
 ##################################################
 # You can repeat any variable (including vectors, lists, or dataframes) with the rep() function,
-# though possible with unintended side effects
+# though possible with unintended side effects.
 vector_of_fives <- rep(5, times=3)
 vector_of_fives
 vector_of_fives <- rep(5, 4)
@@ -185,7 +185,7 @@ dataframe_of_data_repeated
 # The length.out function can be used to specify the exact length;
 # If repeating a vector or similar variable type,
 # this may leave off a number of variables,
-# in order to meet the specified length
+# in order to meet the specified length.
 numbers <- c(1, 2, 3, 4, 5)
 numbers_repeated <- rep(numbers, length.out = 20)
 numbers_repeated
@@ -194,11 +194,9 @@ numbers_repeated
 
 # If working with a vector or similar data type,
 # You can use the each= argument to repeat each variable the specified number of times,
-# before moving on to the next variable
+# before moving on to the next variable.
 numbers_repeated <- rep(numbers, each=2)
 numbers_repeated
 numbers_repeated <- rep(numbers, times=3, each=4)
 numbers_repeated
 ##################################################
-
-
