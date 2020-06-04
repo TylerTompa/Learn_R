@@ -112,21 +112,34 @@ summary(speeds_factor)
 
 # You can use the levels function to see each distinct category, or "level," within a factor.
 # WARNING: THE ORDER WITH WHICH YOU ASSIGN LEVELS IS IMPORTANT.
-# If you don't specify levels manually, R will automatically assign levels aphabetically
-# So when assigning levels, they should be assigned alphabetically, not in their natural order.
+# R automatically puts categories in alphabetical order when defining a factor.
+# Then R assigns each category a level in the order you define each level.
+# In our example, we have "S" (Slow), "A" (Average), and "F" (Fast).
+# R automatically orders the categories: A, F, S.
+# Therefore, we must define the levels with the same order: "Average," then "Fast," then "Slow."
 # Compare the following assignments:
 levels(speeds_factor) <- c("Slow", "Average", "Fast")
 summary(speeds_factor)
 
-levels(speeds_factor) <- c("Slow", "Fast", "Average")
+levels(speeds_factor) <- c("Average", "Fast", "Slow")
 summary(speeds_factor)
 
 # In some cases, certain categories are "better" than others, as in this example.
 # The "ordered" argument can be set to TRUE to specify this.
 grades <- c("Bad", "Needs Improvement", "Needs Improvement", "Good", "Needs Improvement", "Bad", "Good", "Needs Improvement", "Good")
+grades_factor <- factor(grades)
+summary(grades_factor)
+
 grades_factor <- factor(grades, ordered=TRUE, levels=c("Bad", "Needs Improvement", "Good"))
 summary(grades_factor)
 levels(grades_factor)
+
+# If you give the categories in a factor a defined order, you can perform logical operations.
+# The third element of grades_factor is "Needs Improvement," and the fourth element is "Good."
+# Because we gave each level an order, "Needs Improvement" is seen as less than "Good."
+grades_factor[3] > grades_factor[4]
+# Likewise, the third element "Needs Improvement" is seen as more than the sixth element "Bad."
+grades_factor[3] > grades[6]
 
 ##################################################
 
