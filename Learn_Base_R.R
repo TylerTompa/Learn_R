@@ -162,9 +162,9 @@ company
 
 # The defaul R function to get a summary of a dataframe is str()
 str(company)
-# Within the (Tyler - remember what the library was and come back) library is an alternative function - (Tyler - remember what the function was and come back)
-
-
+# Within the dplyr library is an alternative function - glimpse
+library(dplyr)
+glimpse(company)
 
 ##################################################
 
