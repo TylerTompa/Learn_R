@@ -166,6 +166,12 @@ str(company)
 library(dplyr)
 glimpse(company)
 
+# We can use conditional statements to select a subset from dataframes
+company$workday == TRUE & company$profits > 70
+company[company$workday == TRUE & company$profits > 70, ]
+# The same result can be achived using the subset() function
+subset(company, workday==TRUE & profits>70)
+
 ##################################################
 
 # Sequences
