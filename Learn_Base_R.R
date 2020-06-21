@@ -143,6 +143,31 @@ grades_factor[3] > grades[6]
 
 ##################################################
 
+# Dataframes
+##################################################
+# Define vectors of different classes
+days <- c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
+revenues <- c(0, 98, 0, 92, 94, 93, 0)
+costs <- c(0, 24, 0, 22, 22, 23, 0)
+type_of_day <- c("Weekend", "Workday", "Holiday", "Workday", "Workday", "Workday", "Weekend")
+
+# Unlike matrices, the columns in dataframs can contain different datatypes
+company <- data.frame(days, revenues, costs, type_of_day)
+company
+
+# You can use existing columns to creaate new columns
+company$profits <- company$revenues - company$costs
+company$workday <- with(company, ifelse(type_of_day == "Workday", TRUE, FALSE))
+company
+
+# The defaul R function to get a summary of a dataframe is str()
+str(company)
+# Within the (Tyler - remember what the library was and come back) library is an alternative function - (Tyler - remember what the function was and come back)
+
+
+
+##################################################
+
 # Sequences
 ##################################################
 # You can create sequences of numbers with the seq() function.
@@ -213,3 +238,4 @@ numbers_repeated
 numbers_repeated <- rep(numbers, times=3, each=4)
 numbers_repeated
 ##################################################
+
