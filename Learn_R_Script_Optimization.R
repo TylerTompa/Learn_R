@@ -1,0 +1,89 @@
+# One of the easiest ways to optimize your R code is to ensure it is kept up-to-date.
+# You can check which version of R you are running with the command "version."
+version
+# Note that version is a built-in variable, not a function.
+version$major
+version$minor
+
+# Benchmarking
+####################################################################################################
+
+# The speed of your R code may be less than desirable,
+# but it may not be clear whether it would be worth it to change the code.
+# Cases like this is where benchmarking comes in.
+# Benchmarking is the practice of comparing one piece of code to one more or other pieces,
+# and comparig the time it takes each one to run.
+# With benchmarking, you can compare multiple pieces of code with small datasets,
+# before running the most efficient on the much larger full datasets.
+# As an example, consider the following three ways of creating a sequence in R:
+# 1. Using a colon operator: 1:n
+# 2. Use the sequence function, and use the default step size: seq(1:n)
+# 3. Use the sequence function, and explicitly specify the step size: seq(1:n, by=1)
+colon <- function(n) 1:n
+seq_defualt <- function(n) seq(1, n)
+seq_by <- function(n) seq(1, n, by=1)
+# Now, to actually time each function, we use the function system.time()
+system.time(colon(1e8))
+system.time(seq_defualt(1e8))
+system.time(seq_by(1e8))
+# Results may vary depending on the machine and the time these lines are run.
+# As of writing this, the first two lines returned 0, 0, 0,
+# while the third line returned 0.77, 0.13, 0.89.
+# Therefore, if we had an existing code that used the syntax seq(1, n),
+# There is not enough evidence to suggest that changing this code to 1:n would make it any more efficient.
+# However, if our existing code used the syntax seq(1, n, by=x),
+# we do have evidence that changing the code would make it more efficient.
+
+# The system.time() function returns three numbers: user, system, elapsed.  The rough definitions are:
+# user- CPU time charged for the execution of user instructions.
+# system- CPU time charged for execution by the system on behalf of the calling process.
+# elapsed- Approximately the sum of user and system time.  Typically the number we care about.
+
+# You may time a function, but still want to use the results afterards.
+# In this case, assign the results of a function to a variable,
+# all within system.time()
+# WARNING: It is important to use the assignment operator "<-" in these cases,
+# as an equals sign "=" inside a function will be read as a passing in a parameter.
+system.time(numbers <- seq(1,1e9))
+numbers
+
+system.time(numbers)
+
+# In addition to calculating the elapsed time, it is worth calcualting the relative time of tasks.
+default_results <-  system.time(sd(seq(1,1e7)))
+specifiy_by_results <-  system.time(sd(seq(1,1e7, by=1)))
+
+default_results["elapsed"]
+specifiy_by_results["elapsed"]
+# At the time of running this code, the time of the first function was 0.06,
+# and the time of the second was 0.18
+# Therefore, in this example, specifiying the "by" argument causes the code to take 3 times as long.
+specifiy_by_results["elapsed"]/default_results["elapsed"]
+
+# Another way to think of this, is that the code decreased in speed by about 200%.
+((specifiy_by_results["elapsed"]  - default_results["elapsed"]) / default_results["elapsed"]) * 100
+
+####################################################################################################
+
+# Microbenchmark
+####################################################################################################
+
+# The Microbenchmark package is a wrapper around the function system.time().
+# This package makes it straightforward to compare multiple functions.
+library(microbenchmark)
+
+# Define three similar functions that achive the same result.
+colon <- function(n) 1:n
+seq_defualt <- function(n) seq(1, n)
+seq_by <- function(n) seq(1, n, by=1)
+
+# Run the function mircrobenchmark(),
+# passing in each function you are comparing against each other.
+n <- 1e6
+
+microbenchmark(
+  colon(n),
+  seq_defualt(n),
+  seq_by(n),
+  times=10
+)
