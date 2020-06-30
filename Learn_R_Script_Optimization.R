@@ -87,3 +87,34 @@ microbenchmark(
   seq_by(n),
   times=10
 )
+####################################################################################################
+
+# Benchmarkme
+####################################################################################################
+# Benchmarkme is a special library that can be used to test your machine against other.
+# First, load the benchmarkme package, then run the benchmark_std function.
+# This will run a number of standard R operations,
+# and return data on the time it took to run the full function.
+# Be sure to save the results of the function to a variable.
+library("benchmarkme")
+results <- benchmark_std(runs = 3)
+
+# After running the function, you plot the results to get two graphs.
+# The first shows the absolute time it took to run the full function,
+# and the second graph shows the relative time compared to other machines.
+plot(results)
+
+# I ran three loops of this function.
+
+# In the first loop, my machine ranked 80 our of 749 machines.
+# I could buy a new machine if I wanted to improve;
+# however, my relative time is less than 2 times as slow as the fastest.
+
+# In the second loop, my machine ranked 257 out of 747 machines.
+# My relative time was over 5 times slower than the fatest machine.
+# This provide more justification for getting a new machine than the first set of results.
+
+# Another useful function in the benchmarkme package is benchmark_io,
+# which calculates the time it takes to read and write a file of size X MB.
+results_io <- benchmark_io(runs=1, size=50)
+plot(results_io)
