@@ -23,3 +23,15 @@ saveRDS(random_dataframe, fil)
 
 dataframe_rds <- readRDS(fil)
 dataframe_rds
+##################################################
+
+# Other functions
+##################################################
+# You can obtain the RAM of the machine running the script with the get_ram() function
+library(benchmarkme)
+ram <- get_ram()
+ram
+
+# You can obtain CPU iformation using the get_cpu() function.
+cpu <- get_cpu()
+cpu
