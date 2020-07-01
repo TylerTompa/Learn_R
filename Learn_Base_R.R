@@ -33,6 +33,13 @@ class(decimal)
 character <- "4"
 class(character)
 
+# Update 2020-07-01
+# By typing "L" after a integer, you can tell R to store the variable as specifically an integer.
+numeric_by_default <- 10
+specifically_an_integer <- 10L
+class(numeric_by_default)
+class(specifically_an_integer)
+
 # R recognizes a vector of a certain class as that class itself.
 # Instead of a vector of numerics, R just sees numeric.
 vector_of_numbers <- c(1, 2, 3)
@@ -244,4 +251,3 @@ numbers_repeated
 numbers_repeated <- rep(numbers, times=3, each=4)
 numbers_repeated
 ##################################################
-
