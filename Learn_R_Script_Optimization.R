@@ -6,9 +6,8 @@ version$major
 version$minor
 
 # Benchmarking
-####################################################################################################
+##################################################
 
-# The speed of your R code may be less than desirable,
 # but it may not be clear whether it would be worth it to change the code.
 # Cases like this is where benchmarking comes in.
 # Benchmarking is the practice of comparing one piece of code to one more or other pieces,
@@ -63,11 +62,10 @@ specifiy_by_results["elapsed"]/default_results["elapsed"]
 # Another way to think of this, is that the code decreased in speed by about 200%.
 ((specifiy_by_results["elapsed"]  - default_results["elapsed"]) / default_results["elapsed"]) * 100
 
-####################################################################################################
+##################################################
 
 # Microbenchmark
-####################################################################################################
-
+##################################################
 # The Microbenchmark package is a wrapper around the function system.time().
 # This package makes it straightforward to compare multiple functions.
 library(microbenchmark)
@@ -87,10 +85,10 @@ microbenchmark(
   seq_by(n),
   times=10
 )
-####################################################################################################
+##################################################
 
 # Benchmarkme
-####################################################################################################
+##################################################
 # Benchmarkme is a special library that can be used to test your machine against other.
 # First, load the benchmarkme package, then run the benchmark_std function.
 # This will run a number of standard R operations,
@@ -118,3 +116,41 @@ plot(results)
 # which calculates the time it takes to read and write a file of size X MB.
 results_io <- benchmark_io(runs=1, size=50)
 plot(results_io)
+# Benchmarking
+##################################################
+
+# Memory Allocation
+##################################################
+# When you assign a variable in R, R must allocate memory in RAM, which takes time.
+# The R programming language does this automatically.
+# Therefore, to make our code run more quickly,
+# we can minimize the amount of memory R has to perform
+
+# For example, suppose we want to form a sequence of numbers.
+n <- 1e5
+
+# We could do this using the color operator: 1:n
+system.time(1:n)
+
+# Alternatively, we could use a for-loop
+# Note that we are defining a variable, and specifying it's length.
+# The length of our pre-defined vector does not change; only the variable in the vector do.
+# Consequently, we define a vector one time, and wait on R to allocate memory one time.
+x <- vector("numeric", n) # define vector of length n
+system.time(for (i in 1:n) {
+  x[i] <- i
+})
+
+# Lastly, we could use a third method similar to the second,
+# wherein we start with an empty object, and add new elements on each loop.
+# The critical difference from the second method,
+# is that we are not changing the current element on each loop; we are adding the element.
+# The means that we start with a vector of length n.
+# On the first loop, we have a vector of length n+1; on the second loop the length is n+2, etc.
+# Consequently, we must reallocate memory in RAM each time we change the length of our vector.
+y <- NULL
+system.time(for (i in 1:n) {
+  y <- c(y,i)
+})
+
+# The important lesson to learn- for efficiency, never grow a vector.
